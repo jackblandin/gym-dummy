@@ -116,9 +116,10 @@ class DummyEnv(gym.Env):
         """
         self.curr_step = -1
         self.curr_episode += 1
-        self.obs_episode_memory.append([])
         self.action_episode_memory.append([])
-        return [np.random.randn()]
+        initial_obs = [np.random.randn()]
+        self.obs_episode_memory.append([initial_obs])
+        return initial_obs
 
     def render(self, mode='human'):
         return
@@ -150,7 +151,7 @@ class DummyEnv(gym.Env):
             Reward.
         """
         action = self.action_episode_memory[self.curr_episode][-1]
-        last_obs = self.observation_space[self.curr_episode][-1]
+        last_obs = self.obs_episode_memory[self.curr_episode][-1]
         if last_obs[0] > 0:
             if action == 1:
                 r = 1
