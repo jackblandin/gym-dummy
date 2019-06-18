@@ -51,7 +51,7 @@ class DummyEnv(gym.Env):
             Observation space.
         """
         self.max_steps_per_episode = max_steps_per_episode
-        self.__version__ = "0.1.0"
+        self.__version__ = "0.0.2"
         logging.info("DummyEnv - Version {}".format(self.__version__))
         self.curr_episode = -1
         self.obs_episode_memory = []
