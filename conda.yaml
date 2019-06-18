@@ -1,0 +1,8 @@
+name: gym-dummy
+channels:
+  - defaults
+dependencies:
+  - python=3.6.8
+  - numpy=1.15.4
+  - gym
+  - twine

@@ -1,3 +1,5 @@
 notebooks/
 .ipynb_checkpoints/
 *.pyc
+dist/
+*egg-info/
