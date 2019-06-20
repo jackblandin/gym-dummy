@@ -53,10 +53,10 @@ class DummyEnv(gym.Env):
         self.max_steps_per_episode = max_steps_per_episode
         self.__version__ = "0.0.2"
         logging.info("DummyEnv - Version {}".format(self.__version__))
-        self.curr_episode = -1
+        self.curr_episode = -1  # Set to -1 b/c reset() adds 1 to episode
         self.obs_episode_memory = []
         self.action_episode_memory = []
-        self.curr_step = -1
+        self.curr_step = 0
         self.reset()
         self.action_space = spaces.Discrete(2)
         self.observation_space = spaces.Discrete(2)
@@ -114,7 +114,7 @@ class DummyEnv(gym.Env):
         object
             The initial observation of the space.
         """
-        self.curr_step = -1
+        self.curr_step = 0
         self.curr_episode += 1
         self.action_episode_memory.append([])
         initial_obs = [np.random.randn()]
