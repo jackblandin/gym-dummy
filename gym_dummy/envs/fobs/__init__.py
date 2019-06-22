@@ -7,8 +7,12 @@ from gym import spaces
 import numpy as np
 
 
-class DummyEnv(gym.Env):
-    """A Naive (dummy) OpenAI Gym environment for the most basic testing.
+class GreaterThanZeroEnv(gym.Env):
+    """A Naive OpenAI Gym environment for basic testing of RL agents.
+
+    Only a single observation is required to predict the optimal action. Goal
+    is to identify if the last observation is greater than zero, i.e. take
+    action 0 if observation is < 0, and take action 1 if observation > 0.
 
     Observation Space
         2 possible observations: 0 or 1
@@ -18,11 +22,11 @@ class DummyEnv(gym.Env):
 
     Reward function
         if last obs == 0, then reward function returns
-            * 1 for taking action 0
-            * 0 for taking action 1
+            * +1 for taking action 0
+            * -1 for taking action 1
         if last obs == 1, then reward function returns
-            * 1 for taking action 1
-            * 0 for taking action 0
+            * +1 for taking action 1
+            * -1 for taking action 0
     """
 
     metadata = {'render.modes': ['human']}
@@ -52,7 +56,7 @@ class DummyEnv(gym.Env):
         """
         self.max_steps_per_episode = max_steps_per_episode
         self.__version__ = "0.0.2"
-        logging.info("DummyEnv - Version {}".format(self.__version__))
+        logging.info("GreaterThanZero - Version {}".format(self.__version__))
         self.curr_episode = -1  # Set to -1 b/c reset() adds 1 to episode
         self.obs_episode_memory = []
         self.action_episode_memory = []
@@ -160,7 +164,7 @@ class DummyEnv(gym.Env):
             if action == 1:
                 r = -1
             else:
-                r = 0
+                r = 1
         return r
 
     def _get_obs(self):

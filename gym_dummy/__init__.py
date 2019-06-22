@@ -1,5 +1,9 @@
 from gym.envs.registration import register
 
 register(
-    id='Dummy-v0',
-    entry_point='gym_dummy.envs:DummyEnv')
+    id='GreaterThanZero-v0',
+    entry_point='gym_dummy.envs.fobs:GreaterThanZeroEnv')
+
+register(
+    id='TwoInARow-v0',
+    entry_point='gym_dummy.envs.pobs:TwoInARowEnv')
