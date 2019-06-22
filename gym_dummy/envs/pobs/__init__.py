@@ -1,10 +1,8 @@
-# Core modules
 import logging.config
+import random
 
-# 3rd party modules
 import gym
 from gym import spaces
-import numpy as np
 
 
 class TwoInARowEnv(gym.Env):
@@ -120,7 +118,7 @@ class TwoInARowEnv(gym.Env):
         self.curr_step = 0
         self.curr_episode += 1
         self.action_episode_memory.append([])
-        initial_obs = [np.random.randn()]
+        initial_obs = self._get_obs()
         self.obs_episode_memory.append([initial_obs])
         return initial_obs
 
@@ -154,17 +152,23 @@ class TwoInARowEnv(gym.Env):
             Reward.
         """
         action = self.action_episode_memory[self.curr_episode][-1]
-        last_n_obs = self.obs_episode_memory[self.curr_episode][-2:]
-        if last_n_obs[0] == last_n_obs[1]:
-            if action == 1:
-                r = 1
-            else:
-                r = -1
-        else:
+        if len(self.obs_episode_memory[self.curr_episode]) < 2:
             if action == 0:
                 r = 1
             else:
                 r = -1
+        else:
+            last_n_obs = self.obs_episode_memory[self.curr_episode][-2:]
+            if last_n_obs[0] == last_n_obs[1]:
+                if action == 1:
+                    r = 1
+                else:
+                    r = -1
+            else:
+                if action == 0:
+                    r = 1
+                else:
+                    r = -1
         return r
 
     def _get_obs(self):
@@ -175,7 +179,7 @@ class TwoInARowEnv(gym.Env):
         list
             Observation.
         """
-        return [np.random.randn()]
+        return [random.choice([0, 1])]
 
     def _step_reset(self):
         """Performs resets that happen after each timestep.

@@ -15,7 +15,7 @@ class GreaterThanZeroEnv(gym.Env):
     action 0 if observation is < 0, and take action 1 if observation > 0.
 
     Observation Space
-        2 possible observations: 0 or 1
+        Continuous number randomly sampled from standard normal distribution.
 
     Action Space
     2 possible actions: 0 or 1
@@ -51,7 +51,7 @@ class GreaterThanZeroEnv(gym.Env):
             Current timestep in episode, as a count.
         action_space : gym.spaces.Discrete
             Action space.
-        observation_space : gym.spaces.Discrete
+        observation_space : gym.spaces.Box
             Observation space.
         """
         self.max_steps_per_episode = max_steps_per_episode
@@ -62,7 +62,7 @@ class GreaterThanZeroEnv(gym.Env):
         self.action_episode_memory = []
         self.curr_step = 0
         self.action_space = spaces.Discrete(2)
-        self.observation_space = spaces.Discrete(2)
+        self.observation_space = spaces.Box(low=-5.6, high=5.6, shape=(1,))
 
     def step(self, action):
         """The agent takes a step in the environment.
