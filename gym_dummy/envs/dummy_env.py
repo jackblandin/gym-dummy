@@ -57,7 +57,6 @@ class DummyEnv(gym.Env):
         self.obs_episode_memory = []
         self.action_episode_memory = []
         self.curr_step = 0
-        self.reset()
         self.action_space = spaces.Discrete(2)
         self.observation_space = spaces.Discrete(2)
 
