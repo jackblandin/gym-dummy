@@ -5,4 +5,5 @@ setup(name='gym_dummy',
       install_requires=[
           'gym',
           'numpy',
+          'tabulate',
       ])

@@ -3,6 +3,7 @@ import random
 
 import gym
 from gym import spaces
+from tabulate import tabulate
 
 
 class TwoInARowEnv(gym.Env):
@@ -127,6 +128,38 @@ class TwoInARowEnv(gym.Env):
 
     def close(self):
         pass
+
+    def q_values(self, model):
+        """Returns a string representation of the Q values for each state.
+
+        This assumes a deterministic policy.
+
+        Parameters
+        ----------
+        model : object
+            Model trying to learn q-values of the env. Must have a `predict`
+            method.
+
+        Returns
+        -------
+        str
+            String representation of Q values.
+
+        TODOs
+        -----
+        If policy is stochastic, we could add a `sample` boolean parameter
+        which would call `model.predict()` multiple times and average the
+        returned values.
+        """
+        inputs = [[[0], [0]], [[1], [1]], [[0], [1]], [[1], [0]]]
+        preds = [model.predict(inp) for inp in inputs]
+        data = []
+        for i, inp in enumerate(inputs):
+            inp_str = ','.join([str(_inp[0]) for _inp in inp])
+            data.append([inp_str]+list(preds[i][0]))
+        s = tabulate(data, headers=['Obs. Seq', 'Action 0', 'Action 1'])
+        s = '\n' + s + '\n'
+        return s
 
     def _take_action(self, action):
         """How to change the environment when taking an action.
